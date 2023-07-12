@@ -10,10 +10,6 @@ const validateSongData = (title, artist, url) => {
 const createSong = ({ title, artist, url }) => {
     validateSongData(title, artist, url);
 
-    if (typeof artist === 'string') {
-        artist = [artist];
-    }
-
     const id = uuidv4();
     const totalPlay = 0;
     const createdAt = new Date();
@@ -49,12 +45,6 @@ const playSong = (id) => {
 const updateSong = (id, updatedData) => {
     try {
         const song = getSongById(id);
-
-        // make sure that artist is an array
-        if (updatedData.artist && typeof updatedData.artist === 'string') {
-            updatedData.artist = [updatedData.artist];
-        }
-
         const updatedSong = { ...song, ...updatedData };
         songRepository.updateSong(id, updatedSong);
         return updatedSong;

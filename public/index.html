@@ -361,6 +361,18 @@
 
       // Initial fetch
       fetchSongs(sortSelect.value);
+
+      function handleVisibilityChange() {
+        if (document.visibilityState === "visible") {
+          fetchSongs(sortSelect.value);
+        }
+      }
+
+      document.addEventListener(
+        "visibilitychange",
+        handleVisibilityChange,
+        false
+      );
     </script>
   </body>
 </html>

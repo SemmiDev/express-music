@@ -16,11 +16,9 @@ app.use(bodyParser.json());
 app.post('/songs', async (req, res) => {
     try {
         const { title, artist, url } = req.body;
+        const artistsArray = artist.split(',').map((artist) => artist.trim());
 
-        const arrayArtist = artist.split(',').map((artist) => artist.trim());
-
-        const song = songService.createSong({ title, artist: arrayArtist, url });
-
+        const song = songService.createSong({ title, artist: artistsArray, url });
         res.status(201).json(wrapResponse(song));
     } catch (error) {
         res.status(400).json(buildErrorResponse(400, error.message));
@@ -86,7 +84,7 @@ app.get('/songs/:id/play', async (req, res) => {
 
         const songUrl = songService.playSong(id);
 
-        res.json({ url: songUrl });
+        res.json({ "url": songUrl })
     } catch (error) {
         res.status(404).json(buildErrorResponse(404, error.message));
     }

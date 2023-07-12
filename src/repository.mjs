@@ -63,7 +63,7 @@ export const getSong = (sortBy) => {
 export const playSong = (id) => {
   const song = getSongById(id);
   if (song) {
-    song.totalPlay++;
+    song.totalPlay = song.totalPlay + 1;
   }
 
   playlist[playlist.findIndex((song) => song.id === id)] = song;
