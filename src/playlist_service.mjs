@@ -49,8 +49,11 @@ const playSong = (id) => {
 
 const updateSong = (id, updatedData) => {
     const song = getSongById(id);
+
+    updatedData.updatedAt = new Date()
     const updatedSong = { ...song, ...updatedData };
     songRepository.updateSong(id, updatedSong);
+
     return updatedSong;
 };
 

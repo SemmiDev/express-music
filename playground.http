@@ -30,4 +30,4 @@ Content-Type: application/json
 DELETE http://localhost:3000/songs/738fbe73-e09b-4f9a-bce3-cfa8c46fb57e
 
 ### Play a song
-GET http://localhost:3000/songs/738fbe73-e09b-4f9a-bce3-cfa8c46fb57e
+GET http://localhost:3000/songs/738fbe73-e09b-4f9a-bce3-cfa8c46fb57e/play
