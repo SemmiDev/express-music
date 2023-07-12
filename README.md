@@ -3,6 +3,12 @@
 ### How to run the code?
 
 ```bash
+# 1. Install dependencies
+npm install
+```
+
+```bash
+# 2. Run the program
 node main.mjs
 ```
 
