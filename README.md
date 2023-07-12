@@ -8,4 +8,4 @@ node main.mjs
 
 ### Open in browser
 
-[https://localhost:3000](https://localhost:3000)
+[http://localhost:3000](http://localhost:3000)
