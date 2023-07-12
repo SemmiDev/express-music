@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
 
-  <body>
+  <body class="bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-400">
     <div class="container mx-auto p-4">
       <h1 class="text-3xl font-bold mb-4">Playlist App</h1>
 
@@ -56,12 +56,12 @@
               />
             </div>
             <div class="mb-4">
-              <label for="url" class="block font-semibold w-full">URL</label>
+              <label for="url" class="block font-semibold">URL</label>
               <input
                 type="url"
                 id="url"
                 name="url"
-                class="p-2 border border-gray-300 rounded"
+                class="p-2 border border-gray-300 rounded w-full"
                 required
               />
             </div>
@@ -117,14 +117,12 @@
               />
             </div>
             <div class="mb-4">
-              <label for="updateUrl" class="block font-semibold w-full"
-                >URL</label
-              >
+              <label for="updateUrl" class="block font-semibold">URL</label>
               <input
                 type="url"
                 id="updateUrl"
                 name="updateUrl"
-                class="p-2 border border-gray-300 rounded"
+                class="p-2 border border-gray-300 rounded w-full"
                 required
               />
             </div>
@@ -141,7 +139,10 @@
       <!-- Sorting Menu -->
       <div class="flex items-center mb-4">
         <span class="mr-2">Sort by:</span>
-        <select id="sortSelect" class="p-2 border border-gray-300 rounded">
+        <select
+          id="sortSelect"
+          class="p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+        >
           <option value="createdAt">Created At (Asc)</option>
           <option value="updatedAt">Updated At (Asc)</option>
           <option value="createdAtDesc">Created At (Desc)</option>
@@ -173,7 +174,15 @@
 
         songs.forEach((song) => {
           const card = document.createElement("div");
-          card.classList.add("bg-white", "p-4", "rounded", "shadow");
+          card.classList.add(
+            "bg-white",
+            "p-4",
+            "rounded",
+            "shadow",
+            "bg-purple-200",
+            "rounded-md",
+            "shadow-2xl"
+          );
 
           const title = document.createElement("h2");
           title.classList.add("text-lg", "font-semibold", "mb-2");

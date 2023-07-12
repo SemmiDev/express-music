@@ -9,7 +9,7 @@ Content-Type: application/json
 }
 
 ### Get song by ID
-GET http://localhost:3000/songs/d7eaa8b2-f743-4606-b091-7bc20036e344
+GET http://localhost:3000/songs/738fbe73-e09b-4f9a-bce3-cfa8c46fb57e
 
 ### Get songs with sorting
 GET http://localhost:3000/songs?sortBy=createdAt
@@ -18,7 +18,7 @@ GET http://localhost:3000/songs?sortBy=createdAt
 GET http://localhost:3000/songs?sortBy=totalPlay
 
 ### Update a song
-PUT http://localhost:3000/songs/d7eaa8b2-f743-4606-b091-7bc20036e344
+PUT http://localhost:3000/songs/738fbe73-e09b-4f9a-bce3-cfa8c46fb57e
 Content-Type: application/json
 
 {
@@ -27,7 +27,7 @@ Content-Type: application/json
 }
 
 ### Delete a song
-DELETE http://localhost:3000/songs/c3d3e969-663a-4465-b24f-3ef34e23693f
+DELETE http://localhost:3000/songs/738fbe73-e09b-4f9a-bce3-cfa8c46fb57e
 
 ### Play a song
-GET http://localhost:3000/songs/d7eaa8b2-f743-4606-b091-7bc20036e344/play
+GET http://localhost:3000/songs/738fbe73-e09b-4f9a-bce3-cfa8c46fb57e

@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+import { logger } from "./logging.mjs";
 
 /* 
   [
@@ -91,12 +92,17 @@ const updateSong = (id, updatedSong) => {
 };
 
 const deleteSong = (id) => {
-  playlist = playlist.filter((song) => song.id !== id);
+  const index = playlist.findIndex((song) => song.id === id);
+  if (index !== -1) {
+    playlist.splice(index, 1);
+  }
 };
 
 export const seedPlaylist = () => {
+  const id = "738fbe73-e09b-4f9a-bce3-cfa8c46fb57e"
+
   const song = {
-    id: uuidv4(),
+    id,
     title: `Naik Kereta Api`,
     artist: [`Agnes Mo`],
     url: "https://open.spotify.com/track/59B6XA5N4lOXPP5a0TxRSZ",
@@ -106,7 +112,7 @@ export const seedPlaylist = () => {
   };
 
   createSong(song);
-  console.log(`Seeded ${song.title} song 👌`);
+  logger.info(`Seeded ${song.title} song 👌`);
 };
 
 export const songRepository = {

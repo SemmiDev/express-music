@@ -1,9 +1,9 @@
-import { songRepository } from './repository.mjs';
-import { v4 as uuidv4 } from 'uuid';
+import { songRepository } from "./repository.mjs";
+import { v4 as uuidv4 } from "uuid";
 
 const validateSongData = (title, artist, url) => {
     if (!title || !artist || !url) {
-        throw new Error('Title, artist, and URL are required');
+        throw new Error("Title, artist, and URL are required");
     }
 };
 
@@ -15,14 +15,23 @@ const createSong = ({ title, artist, url }) => {
     const createdAt = new Date();
     const updatedAt = new Date();
 
-    const song = songRepository.createSong({ id, title, artist, url, totalPlay, createdAt, updatedAt });
+    const song = songRepository.createSong({
+        id,
+        title,
+        artist,
+        url,
+        totalPlay,
+        createdAt,
+        updatedAt,
+    });
+
     return song;
 };
 
 const getSongById = (id) => {
     const song = songRepository.getSongById(id);
     if (!song) {
-        throw new Error('Song not found');
+        throw new Error("Song not found");
     }
     return song;
 };
@@ -33,33 +42,20 @@ const getSong = (sortBy) => {
 };
 
 const playSong = (id) => {
-    try {
-        const song = getSongById(id);
-        songRepository.playSong(id);
-        return song.url;
-    } catch (error) {
-        throw new Error('Song not found');
-    }
+    const song = getSongById(id);
+    songRepository.playSong(id);
+    return song.url;
 };
 
 const updateSong = (id, updatedData) => {
-    try {
-        const song = getSongById(id);
-        const updatedSong = { ...song, ...updatedData };
-        songRepository.updateSong(id, updatedSong);
-        return updatedSong;
-    } catch (error) {
-        throw new Error('Song not found');
-    }
+    const song = getSongById(id);
+    const updatedSong = { ...song, ...updatedData };
+    songRepository.updateSong(id, updatedSong);
+    return updatedSong;
 };
 
 const deleteSong = (id) => {
-    try {
-        const song = getSongById(id);
-        songRepository.deleteSong(id);
-    } catch (error) {
-        throw new Error('Song not found');
-    }
+    songRepository.deleteSong(id);
 };
 
 export const songService = {
