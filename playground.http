@@ -1,0 +1,36 @@
+### Create a new song
+POST http://localhost:3000/songs
+Content-Type: application/json
+
+{
+  "title": "Song 3",
+  "artist": [
+    "Artist 1",
+    "Artist 2"
+  ],
+  "url": "https://open.spotify.com/track/59B6XA5N4lOXPP5a0TxRSZ"
+}
+
+### Get song by ID
+GET http://localhost:3000/songs/27805246-06ae-48c4-9c86-e30f52de3ffb
+
+### Get songs with sorting
+GET http://localhost:3000/songs?sortBy=createdAt
+
+### Get songs with total play sorting
+GET http://localhost:3000/songs?sortBy=totalPlay
+
+### Update a song
+PUT http://localhost:3000/songs/a19814b3-4c97-429b-9264-8d83d3ed50c2
+Content-Type: application/json
+
+{
+  "title":  "Updated Song 1",
+  "artist": "Updated Artist 1"
+}
+
+### Delete a song
+DELETE http://localhost:3000/songs/c3d3e969-663a-4465-b24f-3ef34e23693f
+
+### Play a song
+GET http://localhost:3000/songs/cbc27dec-7751-4ebe-87c3-a7771458cd22/play

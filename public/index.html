@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body>
+    <div class="container mx-auto p-4">
+      <h1 class="text-3xl font-bold mb-4">Playlist App</h1>
+
+      <!-- Create Button -->
+      <button
+        id="createButton"
+        class="bg-blue-500 text-white px-4 py-2 rounded mb-4"
+      >
+        Create
+      </button>
+
+      <!-- Create Modal -->
+      <div
+        id="createModal"
+        class="fixed inset-0 flex items-center justify-center z-50 hidden"
+      >
+        <div class="bg-white p-4 rounded shadow max-w-sm w-full">
+          <div class="flex justify-between mb-4">
+            <h2 class="text-lg font-semibold">Create Song</h2>
+            <button id="closeButton" class="text-red-600 hover:text-red-800">
+              X
+            </button>
+          </div>
+          <form id="createSongForm">
+            <div class="mb-4">
+              <label for="title" class="block font-semibold">Title</label>
+              <input
+                type="text"
+                id="title"
+                name="title"
+                class="p-2 border border-gray-300 rounded w-full"
+                required
+              />
+            </div>
+            <div class="mb-4">
+              <label for="artist" class="block font-semibold">Artist</label>
+              <span class="text-xs">
+                Pisahkan dengan koma (,) jika lebih dari satu artis
+              </span>
+              <input
+                type="text"
+                id="artist"
+                name="artist"
+                class="p-2 border border-gray-300 rounded w-full"
+                required
+              />
+            </div>
+            <div class="mb-4">
+              <label for="url" class="block font-semibold w-full">URL</label>
+              <input
+                type="url"
+                id="url"
+                name="url"
+                class="p-2 border border-gray-300 rounded"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              class="bg-blue-500 text-white px-4 py-2 rounded"
+            >
+              Submit
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Update Modal -->
+      <div
+        id="updateModal"
+        class="fixed inset-0 flex items-center justify-center z-50 hidden"
+      >
+        <div class="bg-white p-4 rounded shadow max-w-sm w-full">
+          <div class="flex justify-between mb-4">
+            <h2 class="text-lg font-semibold">Update Song</h2>
+            <button
+              id="closeUpdateButton"
+              class="text-red-600 hover:text-red-800"
+            >
+              X
+            </button>
+          </div>
+          <form id="updateSongForm">
+            <div class="mb-4">
+              <label for="updateTitle" class="block font-semibold">Title</label>
+              <input
+                type="text"
+                id="updateTitle"
+                name="updateTitle"
+                class="p-2 border border-gray-300 rounded w-full"
+                required
+              />
+            </div>
+            <div class="mb-4">
+              <label for="updateArtist" class="block font-semibold"
+                >Artist</label
+              >
+              <span class="text-xs">
+                Pisahkan dengan koma (,) jika lebih dari satu artis
+              </span>
+              <input
+                type="text"
+                id="updateArtist"
+                name="updateArtist"
+                class="p-2 border border-gray-300 rounded w-full"
+                required
+              />
+            </div>
+            <div class="mb-4">
+              <label for="updateUrl" class="block font-semibold w-full"
+                >URL</label
+              >
+              <input
+                type="url"
+                id="updateUrl"
+                name="updateUrl"
+                class="p-2 border border-gray-300 rounded"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              class="bg-blue-500 text-white px-4 py-2 rounded"
+            >
+              Update
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Sorting Menu -->
+      <div class="flex items-center mb-4">
+        <span class="mr-2">Sort by:</span>
+        <select id="sortSelect" class="p-2 border border-gray-300 rounded">
+          <option value="createdAt">Created At (Asc)</option>
+          <option value="updatedAt">Updated At (Asc)</option>
+          <option value="createdAtDesc">Created At (Desc)</option>
+          <option value="updatedAtDesc">Updated At (Desc)</option>
+          <option value="totalPlay">Total Play (Desc)</option>
+        </select>
+      </div>
+
+      <!-- Song List -->
+      <div
+        id="songList"
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+      ></div>
+    </div>
+
+    <script>
+      const sortSelect = document.getElementById("sortSelect");
+      const songList = document.getElementById("songList");
+      const createButton = document.getElementById("createButton");
+      const createModal = document.getElementById("createModal");
+      const createSongForm = document.getElementById("createSongForm");
+      const closeButton = document.getElementById("closeButton");
+      const updateModal = document.getElementById("updateModal");
+      const updateSongForm = document.getElementById("updateSongForm");
+      const closeUpdateButton = document.getElementById("closeUpdateButton");
+
+      const renderSongs = (songs) => {
+        songList.innerHTML = "";
+
+        songs.forEach((song) => {
+          const card = document.createElement("div");
+          card.classList.add("bg-white", "p-4", "rounded", "shadow");
+
+          const title = document.createElement("h2");
+          title.classList.add("text-lg", "font-semibold", "mb-2");
+          title.textContent = song.title;
+          card.appendChild(title);
+
+          const artist = document.createElement("p");
+          artist.classList.add("text-gray-600", "mb-2");
+          artist.textContent = song.artist;
+          card.appendChild(artist);
+
+          const totalPlay = document.createElement("p");
+          totalPlay.classList.add("text-gray-600", "mb-2");
+          totalPlay.textContent = `Total Play: ${song.totalPlay}`;
+          card.appendChild(totalPlay);
+
+          const playButton = document.createElement("button");
+          playButton.classList.add(
+            "bg-blue-500",
+            "text-white",
+            "px-4",
+            "py-2",
+            "rounded",
+            "mt-2"
+          );
+          playButton.textContent = "Play";
+          playButton.addEventListener("click", () => playSong(song.id));
+          card.appendChild(playButton);
+
+          const deleteButton = document.createElement("button");
+          deleteButton.classList.add(
+            "bg-red-500",
+            "text-white",
+            "px-4",
+            "py-2",
+            "rounded",
+            "mt-2",
+            "ml-2"
+          );
+          deleteButton.textContent = "Delete";
+          deleteButton.addEventListener("click", () => deleteSong(song.id));
+          card.appendChild(deleteButton);
+
+          const updateButton = document.createElement("button");
+          updateButton.classList.add(
+            "bg-green-500",
+            "text-white",
+            "px-4",
+            "py-2",
+            "rounded",
+            "mt-2",
+            "ml-2"
+          );
+          updateButton.textContent = "Update";
+          updateButton.addEventListener("click", () => openUpdateModal(song));
+          card.appendChild(updateButton);
+
+          songList.appendChild(card);
+        });
+      };
+
+      const fetchSongs = async (sortBy) => {
+        try {
+          const response = await fetch(`/songs?sortBy=${sortBy}`);
+          const songs = await response.json();
+          renderSongs(songs.data);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      const playSong = async (id) => {
+        try {
+          const response = await fetch(`/songs/${id}/play`);
+          const { url } = await response.json();
+          window.open(url, "_blank");
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      const openModal = () => {
+        createModal.classList.remove("hidden");
+      };
+
+      const closeModal = () => {
+        createModal.classList.add("hidden");
+      };
+
+      const handleCreateFormSubmit = async (event) => {
+        event.preventDefault();
+        const { title, artist, url } = createSongForm.elements;
+
+        try {
+          const response = await fetch("/songs", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              title: title.value,
+              artist: artist.value,
+              url: url.value,
+            }),
+          });
+
+          if (response.ok) {
+            closeModal();
+            fetchSongs(sortSelect.value);
+          } else {
+            console.error("Failed to create song");
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      const deleteSong = async (id) => {
+        try {
+          const response = await fetch(`/songs/${id}`, {
+            method: "DELETE",
+          });
+
+          if (response.ok) {
+            fetchSongs(sortSelect.value);
+          } else {
+            console.error("Failed to delete song");
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      const updateSong = async (id, updatedSong) => {
+        try {
+          const response = await fetch(`/songs/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(updatedSong),
+          });
+
+          if (response.ok) {
+            fetchSongs(sortSelect.value);
+          } else {
+            console.error("Failed to update song");
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      const openUpdateModal = (song) => {
+        updateModal.classList.remove("hidden");
+        updateSongForm.elements.updateTitle.value = song.title;
+        updateSongForm.elements.updateArtist.value = song.artist;
+        updateSongForm.elements.updateUrl.value = song.url;
+
+        updateSongForm.addEventListener("submit", (event) => {
+          event.preventDefault();
+          const { updateTitle, updateArtist, updateUrl } =
+            updateSongForm.elements;
+
+          const updatedSong = {
+            title: updateTitle.value,
+            artist: updateArtist.value,
+            url: updateUrl.value,
+          };
+
+          updateSong(song.id, updatedSong);
+          closeUpdateModal();
+        });
+      };
+
+      const closeUpdateModal = () => {
+        updateModal.classList.add("hidden");
+      };
+
+      sortSelect.addEventListener("change", (event) => {
+        const sortBy = event.target.value;
+        fetchSongs(sortBy);
+      });
+
+      createButton.addEventListener("click", openModal);
+      createSongForm.addEventListener("submit", handleCreateFormSubmit);
+      closeButton.addEventListener("click", closeModal);
+      closeUpdateButton.addEventListener("click", closeUpdateModal);
+
+      // Initial fetch
+      fetchSongs(sortSelect.value);
+    </script>
+  </body>
+</html>
