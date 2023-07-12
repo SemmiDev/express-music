@@ -1,4 +1,4 @@
-import { songRepository } from "./repository.mjs";
+import { songRepository } from "./playlist_repository.mjs";
 import { v4 as uuidv4 } from "uuid";
 
 const validateSongData = (title, artist, url) => {
