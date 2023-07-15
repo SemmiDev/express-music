@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "server": "node main.mjs"
+  },
   "dependencies": {
     "compression": "^1.7.4",
     "connect-timeout": "^1.9.0",
