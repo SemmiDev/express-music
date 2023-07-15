@@ -4,14 +4,14 @@ Content-Type: application/json
 
 {
   "title": "Song 3",
-  "artist":   "Artist 1, Artist 2",
+  "artist": "Artist 1, Artist 2",
   "url": "https://open.spotify.com/track/59B6XA5N4lOXPP5a0TxRSZ"
 }
 
 ### Get song by ID
 GET http://localhost:3000/songs/738fbe73-e09b-4f9a-bce3-cfa8c46fb57e
 
-### Get songs with sorting
+### Get songs with sorting by createdAt timestamp
 GET http://localhost:3000/songs?sortBy=createdAt
 
 ### Get songs with total play sorting
